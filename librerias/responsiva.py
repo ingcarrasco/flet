@@ -1,4 +1,7 @@
 from xhtml2pdf import pisa
+import datetime
+import locale
+locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 def convert_html_to_pdf(html_string, pdf_path):
     with open(pdf_path, "wb") as pdf_file:
@@ -6,6 +9,7 @@ def convert_html_to_pdf(html_string, pdf_path):
         
     return not pisa_status.err
 
+d = datetime.datetime.now()
 # HTML content
 html_content = '''
 <!DOCTYPE html>
@@ -63,7 +67,7 @@ Corporativo
 </p>
 
 <p>
-<b>Fecha de entrega: </b> 11 de marzo de 2024
+<b>Fecha de entrega: </b> ''' + d.strftime("%d de %B de %Y") + '''
 <br>
 <b>Lugar de entrega: </b> Zapopan, Jalisco
 <br>
@@ -134,7 +138,7 @@ Fecha de devolución: ______________________________
 '''
 
 # Generate PDF
-pdf_path = "./example.pdf"
+pdf_path = ".example.pdf"
 if convert_html_to_pdf(html_content, pdf_path):
     print(f"PDF generated and saved at {pdf_path}")
 else:
